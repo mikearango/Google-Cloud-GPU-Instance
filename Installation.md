@@ -60,4 +60,20 @@ $ sudo apt-get install cuda -y
 5. After the driver finishes installing, verify that the driver installed and initialized properly.
 ```
 $ nvidia-smi
+Tue Aug  8 03:47:36 2017       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 375.66                 Driver Version: 375.66                    |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  Tesla K80           Off  | 0000:00:04.0     Off |                    0 |
+| N/A   34C    P0    56W / 149W |     15MiB / 11439MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID  Type  Process name                               Usage      |
+|=============================================================================|
+|    0      2135    G   /usr/lib/xorg/Xorg                              15MiB |
++-----------------------------------------------------------------------------+
 ```
