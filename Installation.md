@@ -43,4 +43,21 @@ $ sudo apt install gcc -y
 ```
 
 #### Step 4. Install the GPU Drivers (CUDA) and test to make sure they are installed properly
-1. Go to https://cloud.google.com/compute/docs/gpus/add-gpus#install-driver-script to find the specific instructions for manually installing GPU drivers. The commands in this section will be for Ubuntu
+1. Go to https://cloud.google.com/compute/docs/gpus/add-gpus#install-driver-script to find the specific instructions for manually installing GPU drivers. The commands in this section will be for Ubuntu 16.04 LTS. 
+2. Use `curl` to download the CUDA installer and the `dpkg` command to add the repository to your system:
+```
+$ curl -O http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+$ sudo dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+```
+3. Update the package lists:
+```
+$ sudo apt-get update -y
+```
+4. Install CUDA, which includes the NVIDIA driver.
+```
+$ sudo apt-get install cuda -y
+```
+5. After the driver finishes installing, verify that the driver installed and initialized properly.
+```
+$ nvidia-smi
+```
