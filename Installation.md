@@ -1,10 +1,11 @@
-# DATS 6450
+## DATS 6450
+### Setting up a deep learning compute instance with Google Cloud Platform
 
 This document details the installation process for a Google Cloud Virtual Machine with GPUs and deep learning frameworks. 
 To see how the same can be done in AWS, see [Elizabeth Rychlinski](https://github.com/ERych/CC-Summer17/blob/master/Project-Phase1.md)'s
 Github repository.
 
-*Setting up a deep learning compute instance with Google Cloud Platform*
+*Note: In most places where the user will be prompted to answer yes/no to a prompt, we add `-y` to the end of the command so it will automatically answer yes to all prompts. However, if you run into a case where it prompts you to answer, then always answer in the affirmative.*
 
 #### Step 1. Upgrade Google Cloud Account from the free-tier and Request GPUs
 1. Go to https://console.cloud.google.com (sign in with your login credentials if necessary)
@@ -31,3 +32,8 @@ The circle next to your instance will light up green when it is done being setup
 
 #### Step 3. Connect to your new Compute Engine instance
 1. Click `SSH` where it says Connect on your instance and the Google Cloud shell will pop up and automatically connect you via SSH. 
+2. Run the follow commands to update and upgrade the instance: 
+```
+$ sudo apt-get update && sudo apt-get upgrade -y
+
+```
