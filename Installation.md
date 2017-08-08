@@ -26,14 +26,21 @@ Github repository.
 3. Once on this page, click the `Create Instance` button on the top of the page. 
 4. Change the name of your instance if you want to and then click `Customize` under the Machine type settings. 
 5. Click the small blue font that says `GPUs`and specify the number of GPUs needed for the project. Then, adjust your Cores and Memory accordingly. (I specified 1 NVidia Tesla K80 GPU, 8 cores, and 30 GB memory)
-6. Under Boot disk, you can change which OS image you want to use. (I used the default Debian GNU/Linux 9 (stretch))
-7. Click `Create` at the bottom when you are done customizing your instance. 
+6. Under Boot disk, you can change which OS image you want to use. (I used Ubuntu 16.04 LTS)
+7. If you plan on using Google API's for your project, then select the box under `Identity and API access` that says `Allow full access to all Cloud APIs`.
+8. Click `Create` at the bottom when you are done customizing your instance. 
 The circle next to your instance will light up green when it is done being setup
 
-#### Step 3. Connect to your new Compute Engine instance
+#### Step 3. Connect to your new Compute Engine instance and update the software
 1. Click `SSH` where it says Connect on your instance and the Google Cloud shell will pop up and automatically connect you via SSH. 
 2. Run the follow commands to update and upgrade the instance: 
 ```
 $ sudo apt-get update && sudo apt-get upgrade -y
-
 ```
+3. Install the GNU Compiler Collection: 
+```
+$ sudo apt install gcc
+```
+
+#### Step 4. Install the GPU Drivers (CUDA) and test to make sure they are installed properly
+1. Go to https://cloud.google.com/compute/docs/gpus/add-gpus#install-driver-script to find the specific instructions for manually installing GPU drivers. The commands in this section will be for Ubuntu
