@@ -39,7 +39,7 @@ $ sudo apt-get update && sudo apt-get upgrade -y
 ```
 3. Install the GNU Compiler Collection: 
 ```
-$ sudo apt install gcc
+$ sudo apt install gcc -y
 ```
 
 #### Step 4. Install the GPU Drivers (CUDA) and test to make sure they are installed properly
