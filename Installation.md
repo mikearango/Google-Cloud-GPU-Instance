@@ -100,6 +100,45 @@ Tue Aug  8 03:47:36 2017
 ```
 
 #### Step 5. Install Google Chrome and enable graphics
+1. Install Google Chrome using the following commands:
+```
+$ wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+$ sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+$ sudo apt-get update
+$ sudo apt-get install google-chrome-stable
+```
+2. Type `exit` in your command line to close the connection: 
+```
+mike@test-graphics:~$ exit
+logout
+Connection to 35.184.107.81 closed.
+Michaels-MacBook-Pro-16:~ michaelarango$
+```
+3. If you are on a Mac, you need to open up XQuartz so that we can enable graphics for our compute engine. If you do not already have it installed, you can get it at https://www.xquartz.org. Once you have it installed, make sure it is running in the background. You may need to restart your computer for the changes to take effect. 
+4. SSH back into your instance with an added command: 
+```
+$ ssh -Y -i ~/.ssh/google mike@35.184.107.81
+```
+5. Now that you are logged back into your instance, start up google chrome: 
+```
+google-chrome-stable
+```
+It will most likely take a little while for a small box to pop up asking if you want to make Chrome your default browser. Accept the prompt. Then wait for a full browser window to pop up and exit out of it. 
+
+#### Step 7. Installing a desktop environment
+1. Make sure to update and upgrade again: 
+```
+$ sudo apt-get update && sudo apt-get upgrade
+```
+2. Install the default Unity Desktop 
+```
+$ sudo apt-get install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal
+```
+This may take about 5 minutes...
 
 
 #### Step 6. Install the GPU Drivers (CUDA) and test to make sure they are installed properly
+
+
+
+
