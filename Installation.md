@@ -134,8 +134,12 @@ $ sudo apt-get update && sudo apt-get upgrade -y
 ```
 $ sudo apt-get install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y
 ```
-This may take about 5 minutes...
-
+This may take about 5 minutes so it is the perfect time to go create our firewall rule so we can actually remote into the desktop once it is set up. 
+3. Go to the Google Cloud console, open up the sidebar and select `VPC Network`. 
+4. From this screen select `Firewall Rules` from the sidebar. 
+5. Click `CREATE FIREWALL RULE`
+6. Name the rule `vnc-server`, create a target tag with the same name, set the IP ranges to `0.0.0.0/0`, and select `Allow All` under Protocols and Ports. 
+7. Now go back to the `Compute Engine` screen and select our running instance. Edit the instance and add the new `vnc-server` tag under network tags. 
 
 #### Step 6. Install the GPU Drivers (CUDA) and test to make sure they are installed properly
 
