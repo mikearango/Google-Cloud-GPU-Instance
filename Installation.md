@@ -98,4 +98,8 @@ Tue Aug  8 03:47:36 2017
 |    0      2135    G   /usr/lib/xorg/Xorg                              15MiB |
 +-----------------------------------------------------------------------------+
 ```
-#### Step 5. Install the GPU Drivers (CUDA) and test to make sure they are installed properly
+
+#### Step 5. Install Google Chrome and enable graphics
+
+
+#### Step 6. Install the GPU Drivers (CUDA) and test to make sure they are installed properly
