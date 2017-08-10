@@ -32,12 +32,33 @@ Github repository.
 The circle next to your instance will light up green when it is done being setup
 
 #### Step 3. Connect to your new Compute Engine instance and update the software
-1. Click `SSH` where it says Connect on your instance and the Google Cloud shell will pop up and automatically connect you via SSH. 
-2. Run the follow commands to update and upgrade the instance: 
+This section follows the Linux/Mac OS instructions at https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys.
+1. Open a terminal on your workstation and use the `ssh-keygen` command to generate a new key pair. Specify the `-C` flag to add a comment with your username (the username portion is not required).
+```
+$ ssh-keygen -t rsa -f ~/.ssh/[KEY_FILENAME] -C [USERNAME]
+```
+where: 
+- `[KEY_FILENAME]` is the name that you want to use for your SSH key files. For example, a filename of my-ssh-key generates a private key file named my-ssh-key and a public key file named my-ssh-key.pub.
+- `[USERNAME]` is the user for whom you will apply this SSH key pair.
+2. Restrict access to your private key so that only you can read it and nobody can write to it.
+```
+$ chmod 400 ~/.ssh/[KEY_FILENAME]
+```
+3. Follow the instructions at the above link for your operating system on how to add or remove project-wide public SSH keys
+4. Now connect to your instance via SSH or PuTTY: 
+```
+$ ssh -i ~/.ssh[KEY_FILENAME] [USERNAME]@[EXTERNAL IP OF COMPUTE ENGINE]
+```
+My command is as follows: 
+```
+$ ssh -i ~/.ssh/google mike@35.202.4.235
+```
+The external IP address of your compute engline can be copied and pasted straight from the Compute Engine dashboard under the instance you have running. 
+5. Run the follow commands to update and upgrade the instance: 
 ```
 $ sudo apt-get update && sudo apt-get upgrade -y
 ```
-3. Install the GNU Compiler Collection: 
+6. Install the GNU Compiler Collection: 
 ```
 $ sudo apt install gcc -y
 ```
@@ -77,3 +98,4 @@ Tue Aug  8 03:47:36 2017
 |    0      2135    G   /usr/lib/xorg/Xorg                              15MiB |
 +-----------------------------------------------------------------------------+
 ```
+#### Step 5. Install the GPU Drivers (CUDA) and test to make sure they are installed properly
