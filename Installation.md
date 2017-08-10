@@ -128,11 +128,11 @@ It will most likely take a little while for a small box to pop up asking if you 
 #### Step 7. Installing a desktop environment
 1. Make sure to update and upgrade again: 
 ```
-$ sudo apt-get update && sudo apt-get upgrade
+$ sudo apt-get update && sudo apt-get upgrade -y
 ```
 2. Install the default Unity Desktop 
 ```
-$ sudo apt-get install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal
+$ sudo apt-get install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y
 ```
 This may take about 5 minutes...
 
