@@ -62,44 +62,7 @@ $ sudo apt-get update && sudo apt-get upgrade -y
 ```
 $ sudo apt install gcc -y
 ```
-
-#### Step 4. Install the GPU Drivers (CUDA) and test to make sure they are installed properly
-1. Go to https://cloud.google.com/compute/docs/gpus/add-gpus#install-driver-script to find the specific instructions for manually installing GPU drivers. The commands in this section will be for Ubuntu 16.04 LTS. 
-2. Use `curl` to download the CUDA installer and the `dpkg` command to add the repository to your system:
-```
-$ curl -O http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
-$ sudo dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
-```
-3. Update the package lists:
-```
-$ sudo apt-get update -y
-```
-4. Install CUDA, which includes the NVIDIA driver.
-```
-$ sudo apt-get install cuda -y
-```
-5. After the driver finishes installing, verify that the driver installed and initialized properly.
-```
-$ nvidia-smi
-Tue Aug  8 03:47:36 2017       
-+-----------------------------------------------------------------------------+
-| NVIDIA-SMI 375.66                 Driver Version: 375.66                    |
-|-------------------------------+----------------------+----------------------+
-| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
-| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
-|===============================+======================+======================|
-|   0  Tesla K80           Off  | 0000:00:04.0     Off |                    0 |
-| N/A   34C    P0    56W / 149W |     15MiB / 11439MiB |      0%      Default |
-+-------------------------------+----------------------+----------------------+                                                                               
-+-----------------------------------------------------------------------------+
-| Processes:                                                       GPU Memory |
-|  GPU       PID  Type  Process name                               Usage      |
-|=============================================================================|
-|    0      2135    G   /usr/lib/xorg/Xorg                              15MiB |
-+-----------------------------------------------------------------------------+
-```
-
-#### Step 5. Install Google Chrome and enable graphics
+#### Step 4. Install Google Chrome and enable graphics
 1. Install Google Chrome using the following commands:
 ```
 $ wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
@@ -125,7 +88,7 @@ google-chrome-stable
 ```
 It will most likely take a little while for a small box to pop up asking if you want to make Chrome your default browser. Accept the prompt. Then wait for a full browser window to pop up and exit out of it. 
 
-#### Step 7. Installing a desktop environment
+#### Step 5. Installing a desktop environment
 1. Make sure to update and upgrade again: 
 ```
 $ sudo apt-get update && sudo apt-get upgrade -y
@@ -152,7 +115,7 @@ $ gsettings set org.gnome.metacity theme 'Adwaita'
 ```
 If a purplish-pink screen pops up select the `OK` prompt and then select `lightdm` from the list of 2 choices after. While this is loading, go ahead and install VNC Viewer on your local desktop from the provided link https://www.realvnc.com/en/connect/download/viewer/ . 
 
-#### Step 8. Setting up Desktop Environment
+#### Step 6. Setting up Desktop Environment
 1. I'm lazy and want to be able to copy and paste between my local machine and the VNC machine so: 
 ```
 $ sudo apt-get install autocutsel
@@ -205,15 +168,50 @@ $ vncserver -kill :1
 $ vncserver -geometry 1024x640
 ```
 
-#### Step 9. Logging into the desktop
+#### Step 7. Logging into the desktop
 1. Open up VNC Viewer on your local computer
 2. Create a new connection by entering your VNC server info into the box. This should be of the form: 
 `[EXTERNAL IP]:5901`
 3. Click `Continue` on the page with the warning message.
 4. Enter the password we made earlier. 
 
+#### Step 8. Install the GPU Drivers (CUDA) and test to make sure they are installed properly
+1. Go to https://cloud.google.com/compute/docs/gpus/add-gpus#install-driver-script to find the specific instructions for manually installing GPU drivers. The commands in this section will be for Ubuntu 16.04 LTS. 
+2. Use `curl` to download the CUDA installer and the `dpkg` command to add the repository to your system:
+```
+$ curl -O http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+$ sudo dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
+```
+3. Update the package lists:
+```
+$ sudo apt-get update -y
+```
+4. Install CUDA, which includes the NVIDIA driver.
+```
+$ sudo apt-get install cuda -y
+```
+5. After the driver finishes installing, verify that the driver installed and initialized properly.
+```
+$ nvidia-smi
+Tue Aug  8 03:47:36 2017       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 375.66                 Driver Version: 375.66                    |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  Tesla K80           Off  | 0000:00:04.0     Off |                    0 |
+| N/A   34C    P0    56W / 149W |     15MiB / 11439MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID  Type  Process name                               Usage      |
+|=============================================================================|
+|    0      2135    G   /usr/lib/xorg/Xorg                              15MiB |
++-----------------------------------------------------------------------------+
+```
 
-#### Step 6. Install the GPU Drivers (CUDA) and test to make sure they are installed properly
+#### Step 9. Install the GPU Drivers (CUDA) and test to make sure they are installed properly
 
 
 
