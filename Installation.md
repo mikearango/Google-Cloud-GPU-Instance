@@ -145,7 +145,10 @@ This may take about 5 minutes so it is the perfect time to go create our firewal
 ```
 $ sudo apt-get install gnome-shell -y 
 $ sudo apt-get install ubuntu-gnome-desktop -y
-$ sudo apt-get install gnome-core
+$ sudo apt-get install gnome-core -y 
+$ sudo apt-get install adwaita-icon-theme-full adwaita-icon-theme
+$ gsettings get org.gnome.metacity theme
+$ gsettings set org.gnome.metacity theme 'Adwaita'
 ```
 If a purplish-pink screen pops up select the `OK` prompt and then select `lightdm` from the list of 2 choices after. While this is loading, go ahead and install VNC Viewer on your local desktop from the provided link https://www.realvnc.com/en/connect/download/viewer/ . 
 
@@ -204,7 +207,8 @@ $ vncserver -geometry 1024x640
 
 #### Step 9. Logging into the desktop
 1. Open up VNC Viewer on your local computer
-2. Create a new connection by entering your VNC server info into the box. This should be of the form: `[EXTERNAL IP]:5901`
+2. Create a new connection by entering your VNC server info into the box. This should be of the form: 
+`[EXTERNAL IP]:5901`
 3. Click `Continue` on the page with the warning message.
 4. Enter the password we made earlier. 
 
