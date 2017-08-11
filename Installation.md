@@ -135,11 +135,79 @@ $ sudo apt-get update && sudo apt-get upgrade -y
 $ sudo apt-get install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y
 ```
 This may take about 5 minutes so it is the perfect time to go create our firewall rule so we can actually remote into the desktop once it is set up. 
+
 3. Go to the Google Cloud console, open up the sidebar and select `VPC Network`. 
 4. From this screen select `Firewall Rules` from the sidebar. 
 5. Click `CREATE FIREWALL RULE`
 6. Name the rule `vnc-server`, create a target tag with the same name, set the IP ranges to `0.0.0.0/0`, and select `Allow All` under Protocols and Ports. 
 7. Now go back to the `Compute Engine` screen and select our running instance. Edit the instance and add the new `vnc-server` tag under network tags. 
+8. Now let's go back to the terminal and install more desktop goodies: 
+```
+$ sudo apt-get install gnome-shell -y 
+$ sudo apt-get install ubuntu-gnome-desktop -y
+$ sudo apt-get install gnome-core
+```
+If a purplish-pink screen pops up select the `OK` prompt and then select `lightdm` from the list of 2 choices after. While this is loading, go ahead and install VNC Viewer on your local desktop from the provided link https://www.realvnc.com/en/connect/download/viewer/ . 
+
+#### Step 8. Setting up Desktop Environment
+1. I'm lazy and want to be able to copy and paste between my local machine and the VNC machine so: 
+```
+$ sudo apt-get install autocutsel
+```
+2. Install a vncserver client in your virtual machine:
+```
+$ sudo apt-get install tightvncserver
+```
+Sometimes the tightvncserver install does not include a file that we need so let's go ahead and create it anyway: 
+```
+$ touch ~/.Xresources
+```
+3. Set your VNC server password
+```
+$ vncserver
+```
+This will prompt you for a password less than 8 characters. Enter a password and verify it. Say no when asked if you want to make a read-only password. 
+4. Edit the newly-created startup file.
+As it is now, it will only give us a gray screen, so we need to set up the graphics. After you create your password, you should see the following. 
+```
+New 'X' desktop is instance-1:1
+
+Creating default startup script /home/mike/.vnc/xstartup
+Starting applications specified in /home/mike/.vnc/xstartup
+Log file is /home/mike/.vnc/instance-1:1.log
+```
+Copy and paste the startup script path and open it up in `VIM`: 
+```
+$ vim /home/mike/.vnc/xstartup
+```
+In order to insert text in `VIM` you must press `i`. Copy and paste the following into your editor:
+```
+#!/bin/sh
+autocutsel -fork
+xrdb $HOME/.Xresources
+xsetroot -solid grey
+export XKL_XMODMAP_DISABLE=1
+export XDG_CURRENT_DESKTOP="GNOME-Flashback:Unity"
+export XDG_MENU_PREFIX="gnome-flashback-"
+unset DBUS_SESSION_BUS_ADDRESS
+gnome-session --session=gnome-flashback-metacity --disable-acceleration-check --debug &
+```
+Once you have finished editing the script, press the `esc` key, the `:` and then `x`. This is how you write and exit in `VIM`. 
+5. Kill the VNC server: 
+```
+$ vncserver -kill :1
+```
+6. Start up VNC Server with resolution adjustments: 
+```
+$ vncserver -geometry 1024x640
+```
+
+#### Step 9. Logging into the desktop
+1. Open up VNC Viewer on your local computer
+2. Create a new connection by entering your VNC server info into the box. This should be of the form: `[EXTERNAL IP]:5901`
+3. Click `Continue` on the page with the warning message.
+4. Enter the password we made earlier. 
+
 
 #### Step 6. Install the GPU Drivers (CUDA) and test to make sure they are installed properly
 
