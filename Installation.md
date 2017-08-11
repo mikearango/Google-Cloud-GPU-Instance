@@ -25,7 +25,7 @@ Github repository.
 2. Scroll down to the `Compute` section of the sidebar list and click on `Compute Engine`.
 3. Once on this page, click the `Create Instance` button on the top of the page. 
 4. Change the name of your instance if you want to and then click `Customize` under the Machine type settings. 
-5. Click the small blue font that says `GPUs`and specify the number of GPUs needed for the project. Then, adjust your Cores and Memory accordingly. (I specified 1 NVidia Tesla K80 GPU, 8 cores, and 30 GB memory)
+5. Click the small blue font that says `GPUs`and specify the number of GPUs needed for the project. Then, adjust your Cores and Memory accordingly. (I specified 1 NVidia Tesla K80 GPU)
 6. Under Boot disk, you can change which OS image you want to use. (I used Ubuntu 16.04 LTS)
 7. If you plan on using Google API's for your project, then select the box under `Identity and API access` that says `Allow full access to all Cloud APIs`.
 8. Click `Create` at the bottom when you are done customizing your instance. 
