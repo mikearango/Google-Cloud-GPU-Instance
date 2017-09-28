@@ -42,7 +42,7 @@ $ chmod 400 ~/.ssh/[KEY_FILENAME]
 ```
 3. We are quickly going to add a project-wide public SSH key so that we do not need to specify a key everytime we make a new instance. In the top-left corner of the browser window, click the `Products and Services` tab with 3 horizontal lines. Hover your mouse over the `Compute Engine` option and select `Metadata` from the drop-down list. Under `SSH Keys`, click `Add SSH Keys`. An empty textbox should appear. We need to copy and paste the contents of our public key into this box. To find the contents of the public key, we can type the following command into the terminal:
 ```
-$ less ~/.ssh/[KEY_FILENAME].pub
+$ cat ~/.ssh/[KEY_FILENAME].pub
 ```
 The contents will appear in the terminal. Copy and paste them into the textbox and click `Save` at the bottom of the page. 
 4. Now connect to your instance via SSH or PuTTY: 
@@ -60,7 +60,7 @@ Assuming you have chosen Ubuntu 16.04, the steps are as follows:
 ```
 $ sudo apt-get install git -y
 $ git clone https://github.com/amir-jafari/Cloud-Computing.git
-$ cd Cloud-Computing/Deep\ Learning\ Kit\ Installation/Shell\ Script\ Installation/Ubuntu\ 16.04\ -\ Vritual\ Python/
+$ cd Cloud-Computing/Deep-Learning-Kit-Installation/Shell-Script-Installation/Ubuntu-16.04-Vritual-Python/
 $ mv install-16-04-final.sh ~
 $ cd ~
 $ chmod +x install-16-04-final.sh
@@ -284,6 +284,52 @@ Let's continue on to run `Hello World` in Tensorflow:
 >>> print(sess.run(hello))
 Hello, TensorFlow!
 ```
+Now that we know Tensorflow is installed and working properly, let's check to see if Keras is working and using Tensorflow as the backend. 
+```
+>>> import keras
+Using TensorFlow backend.
+```
+Everything looks good so let's check the version to be sure:
+```
+>>> print keras.__version__
+2.0.8
+```
+Next, we are going to test the Theano installation: 
+```
+>>> import theano
+>>> import numpy
+>>> import theano.tensor as T
+>>> from theano import function
+>>> x = T.dscalar('x')
+>>> y = T.dscalar('y')
+>>> z = x + y
+>>> f = function([x, y], z)
+>>> f(2, 3)
+array(5.0)
+```
+Looks like everything is working as it should. Now let's test PyTorch: 
+```
+>>> import torch
+>>> import torchvision
+>>> import torch.optim as optim
+>>> import torch.nn as nn
+>>> criterion = nn.CrossEntropyLoss()
+```
+If we do not get any errors, then we should be good to go. The last software we test in Python 2 is Caffe: 
+```
+>>> import caffe
+/usr/lib/python2.7/dist-packages/matplotlib/font_manager.py:273: UserWarning: Matplotlib is building the font cache using fc-list. This may take a moment.
+  warnings.warn('Matplotlib is building the font cache using fc-list. This may take a moment.')
+>>>
+>>> exit()
+```
+As long as we get a warning like we see above and not an error, then everything is working the way we want it to so we can exit python and deactivate the virtual environment:
+```
+$ deactivate
+```
+
+
+
 
 
 *Note: The instructions up to this point are the only ones required to get up and running with a fully-functional deep learning environment on a Google Cloud Compute Engine. The rest of this manual details the steps necessary to configure a desktop environment for your deep learning virtual machine. These steps are completely unnecessary, but some may find it useful. In fact, I wrote this section for myself because I had little-to-no experience in Linux when I started this manual.* 
