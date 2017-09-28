@@ -1,3 +1,18 @@
 # Google-Cloud-GPU-Instance
 
-This repository documents how to set up a Google Cloud Virtual Machine with GPUs. It also includes a shell script to install and set up the GPU drivers and configure several deep learning frameworks and IDEs. 
+This repository documents the entire process for setting up a Deep Learning Virtual Machine with GPU's on the Google Cloud Platform. The software installed and configured on our virtual machine includes is as follows: 
+- NVIDIA CUDA Toolkit v8.0
+- NVIDIA cuDNN v6.0
+- Python 2.7 virtual Environment
+- Python 3.5 Virtual Environment
+- Tensorflow 
+- Theano 
+- Keras
+- PyTorch
+- torchvision
+- Torch
+- Caffe
+- PyCharm (Community Edition)
+- ZeroBrane Studio
+
+The instructions are laid out in the `installation.md` file. 
