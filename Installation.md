@@ -492,7 +492,7 @@ $ zbstudio
 ```
 You should see a window pop up with a `Welcome.lua` script pulled up. That looks to be working fine as well so free to exit out of this window as well. 
 
-**Congrats! Everything is loaded properly**
+### Congrats! Everything is loaded properly
 
 #### Step 7. Installing a desktop environment
 1. Make sure to update and upgrade again: 
