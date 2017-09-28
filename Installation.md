@@ -53,17 +53,28 @@ An example of the command I use to ssh into my instance is as follows:
 ```
 $ ssh -i ~/.ssh/google mike@35.202.4.235
 ```
-The external IP address of your compute engline can be copied and pasted straight from the Compute Engine dashboard under the instance you have running. 
+The external IP address of your compute engine can be copied and pasted straight from the Compute Engine dashboard under the instance you have running. 
 
-5. Run the follow commands to update and upgrade the instance: 
+#### Step 4. Download and run the install shell script
+Assuming you have chosen Ubuntu 16.04, the steps are as follows:
 ```
-$ sudo apt-get update && sudo apt-get upgrade -y
+$ sudo apt-get install git -y
+$ git clone https://github.com/amir-jafari/Cloud-Computing.git
+$ cd Cloud-Computing/Deep\ Learning\ Kit\ Installation/Shell\ Script\ Installation/Ubuntu\ 16.04\ -\ Vritual\ Python/
+$ mv install-16-04-final.sh ~
+$ cd ~
+$ chmod +x install-16-04-final.sh
+$ sudo ./install-16-04-final.sh <netid or username of ssh key>
 ```
-6. Install the GNU Compiler Collection: 
-```
-$ sudo apt install gcc -y
-```
-#### Step 4. Install Google Chrome and enable graphics
+This process should take anywhere from 30-45 minutes. There are one or two places where you will be prompted for an answer. Always say yes. 
+
+#### Step 5. Testing to see that all the software was installed correctly
+
+****INSERT THIS SECTION HERE NEXT****
+
+*Note: The instructions up to this point are the only ones required to get up and running with a fully-functional deep learning environment on a Google Cloud Compute Engine. The rest of this manual details the steps necessary to configure a desktop environment for your deep learning virtual machine. These steps are completely unnecessary, but some may find it useful. In fact, I wrote this section for myself because I had little-to-no experience in Linux when I started this manual.* 
+
+#### Step 6. Install Google Chrome and enable graphics
 1. Install Google Chrome using the following commands:
 ```
 $ wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
@@ -89,7 +100,7 @@ google-chrome-stable
 ```
 It will most likely take a little while for a small box to pop up asking if you want to make Chrome your default browser. Accept the prompt. Then wait for a full browser window to pop up and exit out of it. 
 
-#### Step 5. Installing a desktop environment
+#### Step 7. Installing a desktop environment
 1. Make sure to update and upgrade again: 
 ```
 $ sudo apt-get update && sudo apt-get upgrade -y
@@ -116,7 +127,7 @@ $ gsettings set org.gnome.metacity theme 'Adwaita'
 ```
 If a purplish-pink screen pops up select the `OK` prompt and then select `lightdm` from the list of 2 choices after. While this is loading, go ahead and install VNC Viewer on your local desktop from the provided link https://www.realvnc.com/en/connect/download/viewer/ . 
 
-#### Step 6. Setting up Desktop Environment
+#### Step 8. Setting up Desktop Environment
 1. I'm lazy and want to be able to copy and paste between my local machine and the VNC machine so: 
 ```
 $ sudo apt-get install autocutsel
@@ -169,7 +180,7 @@ $ vncserver -kill :1
 $ vncserver -geometry 1024x640
 ```
 
-#### Step 7. Logging into the desktop
+#### Step 9. Logging into the desktop
 1. Open up VNC Viewer on your local computer
 2. Create a new connection by entering your VNC server info into the box. This should be of the form: 
 `[EXTERNAL IP]:5901`
