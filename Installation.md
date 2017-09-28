@@ -1,9 +1,4 @@
-## DATS 6450
-### Setting up a deep learning compute instance with Google Cloud Platform
-
-This document details the installation process for a Google Cloud Virtual Machine with GPUs and deep learning frameworks. 
-To see how the same can be done in AWS, see [Elizabeth Rychlinski](https://github.com/ERych/CC-Summer17/blob/master/Project-Phase1.md)'s
-Github repository.
+## Setting up a Deep Learning compute instance on Google Cloud Platform
 
 *Note: In most places where the user will be prompted to answer yes/no to a prompt, we add `-y` to the end of the command so it will automatically answer yes to all prompts. However, if you run into a case where it prompts you to answer, then always answer in the affirmative.*
 
@@ -24,11 +19,12 @@ Github repository.
 1. In the top-left corner of the browser window, click the `Products and Services` tab with 3 horizontal lines
 2. Scroll down to the `Compute` section of the sidebar list and click on `Compute Engine`.
 3. Once on this page, click the `Create Instance` button on the top of the page. 
-4. Change the name of your instance if you want to and then click `Customize` under the Machine type settings. 
-5. Click the small blue font that says `GPUs`and specify the number of GPUs needed for the project. Then, adjust your Cores and Memory accordingly. (I specified 1 NVidia Tesla K80 GPU)
-6. Under Boot disk, you can change which OS image you want to use. (I used Ubuntu 16.04 LTS)
-7. If you plan on using Google API's for your project, then select the box under `Identity and API access` that says `Allow full access to all Cloud APIs`.
-8. Click `Create` at the bottom when you are done customizing your instance. 
+4. Change the name of your instance and then change your region to the region you requested a GPU quota increase in. 
+5. Then, click `Customize` under the Machine type settings. Use the slider to adjust the number of Cores to 8. Click the small blue font that says `GPUs`and specify 1 NVidia Tesla K80 GPU.
+6. Under `Boot disk`, select either the `Ubuntu 14.04 LTS` or `Ubuntu 16.04 LTS` as your OS image since these are the 2 boot disks we have created shell scripts for. At the bottom of the screen, make sure to change `Size` to 75 GB. 
+7. Under `Identity and API access` select the box that says `Allow full access to all Cloud APIs`.
+8. Under `Firewall` select both boxes to `Allow HTTP Traffic` and `Allow HTTPS Traffic`
+9. Click `Create` at the bottom when you are done customizing your instance. 
 The circle next to your instance will light up green when it is done being setup
 
 #### Step 3. Connect to your new Compute Engine instance and update the software
