@@ -177,7 +177,7 @@ $ vncserver -kill :1
 ```
 6. Start up VNC Server with resolution adjustments: 
 ```
-$ vncserver -geometry 1024x640
+$ vncserver -geometry 1280x800
 ```
 
 #### Step 9. Logging into the desktop
