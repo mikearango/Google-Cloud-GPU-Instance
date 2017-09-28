@@ -69,8 +69,144 @@ $ sudo ./install-16-04-final.sh <netid or username of ssh key>
 This process should take anywhere from 30-45 minutes. There are one or two places where you will be prompted for an answer. Always say yes. 
 
 #### Step 5. Testing to see that all the software was installed correctly
+The first thing we are going to do is clean up from the install by deleting all our downloads and install scripts:
+```
+$ rm -rf cuda-repo-ubuntu1604-8-0-local-ga2_8.0.61-1_amd64.deb cudnn-8.0-linux-x64-v6.0.tgz pycharm-community_2016.3-mm1_all.deb ZeroBraneStudioEduPack-1.60-linux.sh install-16-04-final.sh Cloud-Computing
+```
+The first thing we test is `NVIDIA CUDA Toolkit`. We can verify the driver version by running the following command: 
+```
+$ cat /proc/driver/nvidia/version
+```
+We should get output that looks like this:
+```
+NVRM version: NVIDIA UNIX x86_64 Kernel Module  375.66  Mon May  1 15:29:16 PDT 2017
+GCC version:  gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.4)
+```
+We can also check the NVIDIA System Management Interface by typing:
+```
+$ nvidia-smi
+```
+and we should see something like this: 
+```
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 375.66                 Driver Version: 375.66                    |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  Tesla K80           Off  | 0000:00:04.0     Off |                    0 |
+| N/A   35C    P0    79W / 149W |      0MiB / 11439MiB |    100%      Default |
++-------------------------------+----------------------+----------------------+
 
-****INSERT THIS SECTION HERE NEXT****
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID  Type  Process name                               Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+```
+We need to install the NVIDIA Developer toolkit to check out our CUDA Compiler: 
+```
+sudo apt-get install nvidia-cuda-toolkit -y
+```
+Now, we run 
+```
+nvcc -V
+```
+and should see something similar to 
+```
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2015 NVIDIA Corporation
+Built on Tue_Aug_11_14:27:32_CDT_2015
+Cuda compilation tools, release 7.5, V7.5.17
+```
+In order to check that the installation was successful we are going to compile the samples & run the device query script in the CUDA samples directory:
+```
+cd /usr/local/cuda/samples
+sudo make
+```
+Do not worry if you get an error part of the way through the `sudo make` command as it has to do with things being recently deprecated. Now, go find the `deviceQuery` script and run it:
+```
+cd /bin/x86_64/linux/release
+sudo ./deviceQuery
+```
+We should get output that looks like this: 
+```
+./deviceQuery Starting...
+
+ CUDA Device Query (Runtime API) version (CUDART static linking)
+
+Detected 1 CUDA Capable device(s)
+
+Device 0: "Tesla K80"
+  CUDA Driver Version / Runtime Version          8.0 / 8.0
+  CUDA Capability Major/Minor version number:    3.7
+  Total amount of global memory:                 11440 MBytes (11995578368 bytes)
+  (13) Multiprocessors, (192) CUDA Cores/MP:     2496 CUDA Cores
+  GPU Max Clock rate:                            824 MHz (0.82 GHz)
+  Memory Clock rate:                             2505 Mhz
+  Memory Bus Width:                              384-bit
+  L2 Cache Size:                                 1572864 bytes
+  Maximum Texture Dimension Size (x,y,z)         1D=(65536), 2D=(65536, 65536), 3D=(4096, 4096, 4096)
+  Maximum Layered 1D Texture Size, (num) layers  1D=(16384), 2048 layers
+  Maximum Layered 2D Texture Size, (num) layers  2D=(16384, 16384), 2048 layers
+  Total amount of constant memory:               65536 bytes
+  Total amount of shared memory per block:       49152 bytes
+  Total number of registers available per block: 65536
+  Warp size:                                     32
+  Maximum number of threads per multiprocessor:  2048
+  Maximum number of threads per block:           1024
+  Max dimension size of a thread block (x,y,z): (1024, 1024, 64)
+  Max dimension size of a grid size    (x,y,z): (2147483647, 65535, 65535)
+  Maximum memory pitch:                          2147483647 bytes
+  Texture alignment:                             512 bytes
+  Concurrent copy and kernel execution:          Yes with 2 copy engine(s)
+  Run time limit on kernels:                     No
+  Integrated GPU sharing Host Memory:            No
+  Support host page-locked memory mapping:       Yes
+  Alignment requirement for Surfaces:            Yes
+  Device has ECC support:                        Enabled
+  Device supports Unified Addressing (UVA):      Yes
+  Device PCI Domain ID / Bus ID / location ID:   0 / 0 / 4
+  Compute Mode:
+     < Default (multiple host threads can use ::cudaSetDevice() with device simultaneously) >
+
+deviceQuery, CUDA Driver = CUDART, CUDA Driver Version = 8.0, CUDA Runtime Version = 8.0, NumDevs = 1, Device0 = Tesla K80
+Result = PASS
+```
+We are mostly concerned with the last 2 lines that confirm the CUDA Driver Version, GPU Device, and that we passed the test! Since it is a really quick test, let's also double-check our bandwidth:
+```
+sudo ./bandwidthTest
+```
+and we should see: 
+```
+[CUDA Bandwidth Test] - Starting...
+Running on...
+
+ Device 0: Tesla K80
+ Quick Mode
+
+ Host to Device Bandwidth, 1 Device(s)
+ PINNED Memory Transfers
+   Transfer Size (Bytes)	Bandwidth(MB/s)
+   33554432			9048.7
+
+ Device to Host Bandwidth, 1 Device(s)
+ PINNED Memory Transfers
+   Transfer Size (Bytes)	Bandwidth(MB/s)
+   33554432			10068.7
+
+ Device to Device Bandwidth, 1 Device(s)
+ PINNED Memory Transfers
+   Transfer Size (Bytes)	Bandwidth(MB/s)
+   33554432			156582.5
+
+Result = PASS
+
+NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.
+```
+We passed both tests, so it is time to check out if cuDNN is set up correctly. 
+
 
 *Note: The instructions up to this point are the only ones required to get up and running with a fully-functional deep learning environment on a Google Cloud Compute Engine. The rest of this manual details the steps necessary to configure a desktop environment for your deep learning virtual machine. These steps are completely unnecessary, but some may find it useful. In fact, I wrote this section for myself because I had little-to-no experience in Linux when I started this manual.* 
 
