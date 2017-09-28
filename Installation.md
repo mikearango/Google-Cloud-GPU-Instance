@@ -450,8 +450,27 @@ If we do not get errors, then we can exit:
 th> exit
 Do you really want to exit ([y]/n)? y
 ```
-
-
+Type `exit` in your command line to close the connection: 
+```
+mike@gpu-1604:~$ exit
+logout
+Connection to 35.196.69.170 closed.
+Michaels-MacBook-Pro-16:~ michaelarango$
+```
+If you are on a Mac, you need to open up XQuartz so that we can enable graphics for our compute engine. If you do not already have it installed, you can get it at https://www.xquartz.org. Once you have it installed, make sure it is running in the background. You may need to restart your computer for the changes to take effect. 
+SSH back into your instance, but add the `-X` flag like so: 
+```
+$ ssh -X -i ~/.ssh/google mike@35.184.107.81
+```
+Now that you are logged back into your instance, you may see some output similar to the following: 
+```
+/usr/bin/xauth:  file /home/mike/.Xauthority does not exist
+```
+This is a good indication that our graphics are now enabled. Let's check to see if our IDE's installed properly. First, we open up PyCharm by typing: 
+```
+$ pycharm-community
+```
+A box should pop up asking you if you want to import settings from another version of Pycharm. You should answer no and continue along to `Accept` the agreement. Feel free to exit out of PyCharm once the `
 
 *Note: The instructions up to this point are the only ones required to get up and running with a fully-functional deep learning environment on a Google Cloud Compute Engine. The rest of this manual details the steps necessary to configure a desktop environment for your deep learning virtual machine. These steps are completely unnecessary, but some may find it useful. In fact, I wrote this section for myself because I had little-to-no experience in Linux when I started this manual.* 
 
@@ -463,23 +482,17 @@ $ sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stab
 $ sudo apt-get update
 $ sudo apt-get install google-chrome-stable -y
 ```
-2. Type `exit` in your command line to close the connection: 
-```
-mike@test-graphics:~$ exit
-logout
-Connection to 35.184.107.81 closed.
-Michaels-MacBook-Pro-16:~ michaelarango$
-```
-3. If you are on a Mac, you need to open up XQuartz so that we can enable graphics for our compute engine. If you do not already have it installed, you can get it at https://www.xquartz.org. Once you have it installed, make sure it is running in the background. You may need to restart your computer for the changes to take effect. 
-4. SSH back into your instance with an added command: 
-```
-$ ssh -Y -i ~/.ssh/google mike@35.184.107.81
-```
-5. Now that you are logged back into your instance, start up google chrome: 
+2. Start up google chrome: 
 ```
 google-chrome-stable
 ```
-It will most likely take a little while for a small box to pop up asking if you want to make Chrome your default browser. Accept the prompt. Then wait for a full browser window to pop up and exit out of it. 
+It will most likely take a little while for a small box to pop up asking if you want to make Chrome your default browser. Accept the prompt. Then wait for a full browser window to pop up and exit out of it. Now, we will test ZeroBrane Studio: 
+```
+$ zbstudio
+```
+You should see a window pop up with a `Welcome.lua` script pulled up. That looks to be working fine as well so free to exit out of this window as well. 
+
+**Congrats! Everything is loaded properly**
 
 #### Step 7. Installing a desktop environment
 1. Make sure to update and upgrade again: 
