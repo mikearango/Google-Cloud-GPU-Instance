@@ -107,11 +107,11 @@ and we should see something like this:
 ```
 We need to install the NVIDIA Developer toolkit to check out our CUDA Compiler: 
 ```
-sudo apt-get install nvidia-cuda-toolkit -y
+$ sudo apt-get install nvidia-cuda-toolkit -y
 ```
 Now, we run 
 ```
-nvcc -V
+$ nvcc -V
 ```
 and should see something similar to 
 ```
@@ -122,13 +122,13 @@ Cuda compilation tools, release 7.5, V7.5.17
 ```
 In order to check that the installation was successful we are going to compile the samples & run the device query script in the CUDA samples directory:
 ```
-cd /usr/local/cuda/samples
-sudo make
+$ cd /usr/local/cuda/samples
+$ sudo make
 ```
 Do not worry if you get an error part of the way through the `sudo make` command as it has to do with things being recently deprecated. Now, go find the `deviceQuery` script and run it:
 ```
-cd /bin/x86_64/linux/release
-sudo ./deviceQuery
+$ cd /bin/x86_64/linux/release
+$ sudo ./deviceQuery
 ```
 We should get output that looks like this: 
 ```
@@ -176,7 +176,7 @@ Result = PASS
 ```
 We are mostly concerned with the last 2 lines that confirm the CUDA Driver Version, GPU Device, and that we passed the test! Since it is a really quick test, let's also double-check our bandwidth:
 ```
-sudo ./bandwidthTest
+$ sudo ./bandwidthTest
 ```
 and we should see: 
 ```
@@ -205,7 +205,85 @@ Result = PASS
 
 NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.
 ```
-We passed both tests, so it is time to check out if cuDNN is set up correctly. 
+We passed both tests, so it is time to check out if cuDNN is installed. 
+```
+$ cd ~
+$ cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2
+```
+When I run this, I see the following: 
+```
+#define CUDNN_MAJOR      6
+#define CUDNN_MINOR      0
+#define CUDNN_PATCHLEVEL 21
+--
+#define CUDNN_VERSION    (CUDNN_MAJOR * 1000 + CUDNN_MINOR * 100 + CUDNN_PATCHLEVEL)
+
+#include "driver_types.h"
+```
+which confirms our install of cuDNN. 
+Now we are going to test the installation of everything in our Python 2.7 Virtual Environment. To activate the virtual environment, we run:
+```
+$ source ~/python2/bin/activate
+```
+After running this command, your terminal prompt should indicate we are working in the virtual environment: 
+```
+(python2) mike@gpu-1604:~$
+```
+Let's go ahead and test Python and Tensorflow first: 
+```
+$ python
+Python 2.7.12 (default, Nov 19 2016, 06:48:10)
+[GCC 5.4.0 20160609] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 
+```
+So, Python is working and now we need to see if we can import tensorflow and then check to see if it is working with the GPU:
+```
+>>> import tensorflow as tf
+>>> from tensorflow.python.client import device_lib
+>>> print(device_lib.list_local_devices())
+```
+We get a lot of output from this, but it tells us tensorflow is using the GPU so we know it is working the way we want
+```
+2017-09-28 18:11:14.669338: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+2017-09-28 18:11:14.669374: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-09-28 18:11:14.669381: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+2017-09-28 18:11:14.669385: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-09-28 18:11:14.669390: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+2017-09-28 18:11:16.980493: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:893] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2017-09-28 18:11:16.981266: I tensorflow/core/common_runtime/gpu/gpu_device.cc:955] Found device 0 with properties:
+name: Tesla K80
+major: 3 minor: 7 memoryClockRate (GHz) 0.8235
+pciBusID 0000:00:04.0
+Total memory: 11.17GiB
+Free memory: 11.11GiB
+2017-09-28 18:11:16.981290: I tensorflow/core/common_runtime/gpu/gpu_device.cc:976] DMA: 0
+2017-09-28 18:11:16.981296: I tensorflow/core/common_runtime/gpu/gpu_device.cc:986] 0:   Y
+2017-09-28 18:11:16.981307: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1045] Creating TensorFlow device (/gpu:0) -> (device: 0, name: Tesla K80, pci bus id: 0000:00:04.0)
+[name: "/cpu:0"
+device_type: "CPU"
+memory_limit: 268435456
+locality {
+}
+incarnation: 10703710801422382423
+, name: "/gpu:0"
+device_type: "GPU"
+memory_limit: 11332668621
+locality {
+  bus_id: 1
+}
+incarnation: 6182134195345949993
+physical_device_desc: "device: 0, name: Tesla K80, pci bus id: 0000:00:04.0"
+]
+```
+Let's continue on to run `Hello World` in Tensorflow: 
+```
+>>> hello = tf.constant('Hello, TensorFlow!')
+>>> sess = tf.Session()
+2017-09-28 18:14:06.329226: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1045] Creating TensorFlow device (/gpu:0) -> (device: 0, name: Tesla K80, pci bus id: 0000:00:04.0)
+>>> print(sess.run(hello))
+Hello, TensorFlow!
+```
 
 
 *Note: The instructions up to this point are the only ones required to get up and running with a fully-functional deep learning environment on a Google Cloud Compute Engine. The rest of this manual details the steps necessary to configure a desktop environment for your deep learning virtual machine. These steps are completely unnecessary, but some may find it useful. In fact, I wrote this section for myself because I had little-to-no experience in Linux when I started this manual.* 
