@@ -220,8 +220,7 @@ When I run this, I see the following:
 
 #include "driver_types.h"
 ```
-which confirms our install of cuDNN. 
-Now we are going to test the installation of everything in our Python 2.7 Virtual Environment. To activate the virtual environment, we run:
+which confirms our install of cuDNN. Now we are going to test the installation of everything in our Python 2.7 Virtual Environment. To activate the virtual environment, we run:
 ```
 $ source ~/python2/bin/activate
 ```
@@ -327,8 +326,130 @@ As long as we get a warning like we see above and not an error, then everything 
 ```
 $ deactivate
 ```
+Now we are going to test the installation of everything in our Python 3.5 Virtual Environment. To activate the virtual environment, we run:
+```
+$ source ~/python3/bin/activate
+```
+After running this command, your terminal prompt should indicate we are working in the virtual environment: 
+```
+(python3) mike@gpu-1604:~$
+```
+The first thing we need to do is make sure pandas is installed: 
+```
+$ sudo pip3 install pandas
+```
+Now we open up Python 3.5 to test softwares like we did before: 
+```
+$ python3
+```
+Let's test Tensorflow and everything else we did 
+```
+>>> import tensorflow as tf
+>>> from tensorflow.python.client import device_lib
+>>> print(device_lib.list_local_devices())
+```
+We should get output similar to this: 
+```
+2017-09-28 20:07:02.907776: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+2017-09-28 20:07:02.907814: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-09-28 20:07:02.907821: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+2017-09-28 20:07:02.907840: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-09-28 20:07:02.907845: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+2017-09-28 20:07:05.659404: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:893] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2017-09-28 20:07:05.660248: I tensorflow/core/common_runtime/gpu/gpu_device.cc:955] Found device 0 with properties:
+name: Tesla K80
+major: 3 minor: 7 memoryClockRate (GHz) 0.8235
+pciBusID 0000:00:04.0
+Total memory: 11.17GiB
+Free memory: 11.11GiB
+2017-09-28 20:07:05.660290: I tensorflow/core/common_runtime/gpu/gpu_device.cc:976] DMA: 0
+2017-09-28 20:07:05.660298: I tensorflow/core/common_runtime/gpu/gpu_device.cc:986] 0:   Y
+2017-09-28 20:07:05.660311: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1045] Creating TensorFlow device (/gpu:0) -> (device: 0, name: Tesla K80, pci bus id: 0000:00:04.0)
+[name: "/cpu:0"
+device_type: "CPU"
+memory_limit: 268435456
+locality {
+}
+incarnation: 13255370810448706460
+, name: "/gpu:0"
+device_type: "GPU"
+memory_limit: 11332668621
+locality {
+  bus_id: 1
+}
+incarnation: 7764306636505369561
+physical_device_desc: "device: 0, name: Tesla K80, pci bus id: 0000:00:04.0"
+]
+```
+Great, it looks like tensorflow is using the GPU. Let's continue on to run `Hello World` in Tensorflow: 
+```
+>>> hello = tf.constant('Hello, TensorFlow!')
+>>> sess = tf.Session()
+2017-09-28 18:14:06.329226: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1045] Creating TensorFlow device (/gpu:0) -> (device: 0, name: Tesla K80, pci bus id: 0000:00:04.0)
+>>> print(sess.run(hello))
+b'Hello, TensorFlow!'
+```
+Now that we know Tensorflow is installed and working properly, let's check to see if Keras is working and using Tensorflow as the backend. 
+```
+>>> import keras
+Using TensorFlow backend.
+```
+Everything looks good so let's check the version to be sure:
+```
+>>> print(keras.__version__)
+2.0.8
+```
+Next, we are going to test the Theano installation: 
+```
+>>> import theano
+>>> import numpy
+>>> import theano.tensor as T
+>>> from theano import function
+>>> x = T.dscalar('x')
+>>> y = T.dscalar('y')
+>>> z = x + y
+>>> f = function([x, y], z)
+>>> f(2, 3)
+array(5.0)
+```
+Looks like everything is working as it should. Now let's test PyTorch: 
+```
+>>> import torch
+>>> import torchvision
+>>> import torch.optim as optim
+>>> import torch.nn as nn
+>>> criterion = nn.CrossEntropyLoss()
+```
+If we do not get any errors, then we should be good to exit python and deactivate the virtual environment:  
+```
+>>> exit()
+$ deactivate
+```
 
+Now that we are outide of the virtual environment, we can test torch: 
+```
+$ th
 
+  ______             __   |  Torch7
+ /_  __/__  ________/ /   |  Scientific computing for Lua.
+  / / / _ \/ __/ __/ _ \  |  Type ? for help
+ /_/  \___/_/  \__/_//_/  |  https://github.com/torch
+                          |  http://torch.ch
+
+th>
+```
+Now we can test it more by loading packages: 
+```
+th> require 'cunn'
+true
+                                                                      [2.3727s]
+th>
+```
+If we do not get errors, then we can exit: 
+```
+th> exit
+Do you really want to exit ([y]/n)? y
+```
 
 
 
