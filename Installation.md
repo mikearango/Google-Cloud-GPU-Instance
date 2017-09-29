@@ -498,7 +498,7 @@ This may take about 5 minutes so it is the perfect time to go create our firewal
 4. From this screen select `Firewall Rules` from the sidebar. 
 5. Click `CREATE FIREWALL RULE`
 6. Name the rule `vnc-server`, create a target tag with the same name, set the IP ranges to `0.0.0.0/0`, and select `Allow All` under Protocols and Ports. 
-7. Now go back to the `Compute Engine` screen and select our running instance. Edit the instance and add the new `vnc-server` tag under network tags. 
+7. Now go back to the `Compute Engine` screen and select our running instance. When our install commands are done running, we will need to stop the instance so we can edit it. Once it is stopped, click on the instance and select `Edit`. Then, add the new `vnc-server` tag under `network tags`. Now, restart the instance and ssh back in (remember the -X flag). 
 8. Now let's go back to the terminal and install more desktop goodies: 
 ```
 $ sudo apt-get install gnome-shell -y 
