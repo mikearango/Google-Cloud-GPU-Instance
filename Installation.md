@@ -470,23 +470,9 @@ This is a good indication that our graphics are now enabled. Let's check to see 
 ```
 $ pycharm-community
 ```
-A box should pop up asking you if you want to import settings from another version of Pycharm. You should answer no and continue along to `Accept` the agreement. Feel free to exit out of PyCharm once the `
+A box should pop up asking you if you want to import settings from another version of Pycharm. You should answer no and continue along to `Accept` the agreement. Feel free to exit out of PyCharm once the Welcome to PyCharm window pops up. 
 
-*Note: The instructions up to this point are the only ones required to get up and running with a fully-functional deep learning environment on a Google Cloud Compute Engine. The rest of this manual details the steps necessary to configure a desktop environment for your deep learning virtual machine. These steps are completely unnecessary, but some may find it useful. In fact, I wrote this section for myself because I had little-to-no experience in Linux when I started this manual.* 
-
-#### Step 6. Install Google Chrome and enable graphics
-1. Install Google Chrome using the following commands:
-```
-$ wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-$ sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-$ sudo apt-get update
-$ sudo apt-get install google-chrome-stable -y
-```
-2. Start up google chrome: 
-```
-google-chrome-stable
-```
-It will most likely take a little while for a small box to pop up asking if you want to make Chrome your default browser. Accept the prompt. Then wait for a full browser window to pop up and exit out of it. Now, we will test ZeroBrane Studio: 
+Now, we will test ZeroBrane Studio: 
 ```
 $ zbstudio
 ```
@@ -494,7 +480,10 @@ You should see a window pop up with a `Welcome.lua` script pulled up. That looks
 
 ### Congrats! Everything is loaded properly
 
-#### Step 7. Installing a desktop environment
+
+*Note: The instructions up to this point are the only ones required to get up and running with a fully-functional deep learning environment on a Google Cloud Compute Engine. The rest of this manual details the steps necessary to configure a desktop environment for your deep learning virtual machine. These steps are completely unnecessary, but some may find it useful. In fact, I wrote this section for myself because I had little-to-no experience in Linux when I started this manual.* 
+
+#### Step 6. Installing a desktop environment
 1. Make sure to update and upgrade again: 
 ```
 $ sudo apt-get update && sudo apt-get upgrade -y
@@ -521,7 +510,7 @@ $ gsettings set org.gnome.metacity theme 'Adwaita'
 ```
 If a purplish-pink screen pops up select the `OK` prompt and then select `lightdm` from the list of 2 choices after. While this is loading, go ahead and install VNC Viewer on your local desktop from the provided link https://www.realvnc.com/en/connect/download/viewer/ . 
 
-#### Step 8. Setting up Desktop Environment
+#### Step 7. Setting up Desktop Environment
 1. I'm lazy and want to be able to copy and paste between my local machine and the VNC machine so: 
 ```
 $ sudo apt-get install autocutsel
@@ -574,7 +563,7 @@ $ vncserver -kill :1
 $ vncserver -geometry 1280x800
 ```
 
-#### Step 9. Logging into the desktop
+#### Step 8. Logging into the desktop
 1. Open up VNC Viewer on your local computer
 2. Create a new connection by entering your VNC server info into the box. This should be of the form: 
 `[EXTERNAL IP]:5901`
