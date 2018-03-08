@@ -21,7 +21,7 @@
 3. Once on this page, click the `Create Instance` button on the top of the page. 
 4. Change the name of your instance and then change your region to the region you requested a GPU quota increase in. 
 5. Then, click `Customize` under the Machine type settings. Use the slider to adjust the number of Cores to 8. Click the small blue font that says `GPUs`and specify 1 NVidia Tesla K80 GPU.
-6. Under `Boot disk`, select either the `Ubuntu 14.04 LTS` or `Ubuntu 16.04 LTS` as your OS image since these are the 2 boot disks we have created shell scripts for. At the bottom of the screen, make sure to change `Size` to 75 GB. 
+6. Under `Boot disk`, select `Ubuntu 16.04 LTS` as your OS image since these are the 2 boot disks we have created shell scripts for. At the bottom of the screen, make sure to change `Size` to 75 GB. 
 7. Under `Identity and API access` select the box that says `Allow full access to all Cloud APIs`.
 8. Under `Firewall` select both boxes to `Allow HTTP Traffic` and `Allow HTTPS Traffic`
 9. Click `Create` at the bottom when you are done customizing your instance. 
