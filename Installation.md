@@ -58,6 +58,8 @@ The external IP address of your compute engine can be copied and pasted straight
 #### Step 4. Download and run the install shell script
 Assuming you have chosen Ubuntu 16.04, the steps are as follows:
 ```
+$ sudo apt-get update
+$ sudo apt-get upgrade -y
 $ sudo apt-get install git -y
 $ git clone https://github.com/amir-jafari/Cloud-Computing.git
 $ cd Cloud-Computing/Deep-Learning-Kit-Installation/Shell-Script-Installation/Ubuntu-16.04-Vritual-Python/
